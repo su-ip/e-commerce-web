@@ -1,0 +1,80 @@
+/* PERFORMANCE NOTE: Minify this CSS file in production using tools like cssnano or online minifiers */
+/* PERFORMANCE NOTE: Enable GZIP compression on the server for CSS files */
+
+body {
+    font-family: Arial;
+    padding: 20px;
+}
+
+/* LOADER STYLES */
+#loader {
+    display: none;
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+#products {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+
+    gap: 20px;
+}
+
+.product-card {
+
+    border: 1px solid #ddd;
+
+    padding: 15px;
+
+    border-radius: 10px;
+}
+
+.product-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.product-info {
+    margin-top: 15px;
+}
+
+.quantity-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.quantity-controls button {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.remove-button {
+    background-color: #ff4d4f;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.remove-button:hover {
+    background-color: #e04344;
+}
+
+#totalPrice {
+    margin-top: 20px;
+}
