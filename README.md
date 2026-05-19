@@ -18,11 +18,10 @@ A full-stack e-commerce web application built to provide a smooth and user-frien
 
 ## 🛠️ Tech Stack
 
-> (Update this based on your project)
 
-- Frontend: HTML / CSS / JavaScript / React / Flutter Web
-- Backend: Django / Node.js / Flask
-- Database: PostgreSQL / MySQL / MongoDB
+- Frontend: HTML / CSS / JavaScript
+- Backend: Node.js
+- Database: PostgreSQL
 - Version Control: Git & GitHub
 
 ---
