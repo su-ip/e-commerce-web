@@ -5,27 +5,94 @@
     <title>Cart</title>
     <meta name="description" content="Best ecommerce website" />
     <meta name="keywords" content="shop,ecommerce" />
-
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    />
-
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 
 <body>
+    <header class="page-header">
+        <div class="brand">
+            <span class="brand-logo">🛍️</span>
+            <div>
+                <h1>ShopEasy</h1>
+                <p>Your ecommerce store for fast, friendly shopping.</p>
+            </div>
+        </div>
 
-    <h1>Shopping Cart</h1>
+        <nav class="top-nav">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="cart.html" class="cart-icon"><i class="fas fa-shopping-bag"></i></a>
+                <button class="menu-icon" id="menuToggle" aria-label="Open navigation menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </nav>
 
-    <div id="cartItems"></div>
+        <div class="nav-dropdown" id="navDropdown">
+            <a href="index.html">Home</a>
+            <a href="#profile.html">Profile</a>
+            <a href="products.html">Products</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="#faqs">FAQs</a>
+            <a href="login.html" onclick="logout()">Log Out</a>
+        </div>
+    </header>
 
-    <h2 id="totalPrice"></h2>
+    <main class="cart-page">
+        <section class="cart-items-panel">
+            <div class="page-title">
+                <h1>Shopping Cart</h1>
+                <p>Review your items and update quantities before checkout.</p>
+            </div>
+            <div id="cartItems"></div>
+        </section>
 
-    <button onclick="checkout()">
-        Checkout
-    </button>
+        <aside class="cart-summary-panel">
+            <div class="summary-card">
+                <h2>Order Summary</h2>
+                <div class="summary-line">
+                    <span>Subtotal</span>
+                    <span id="totalPrice">$0.00</span>
+                </div>
+                <div class="summary-line">
+                    <span>Shipping</span>
+                    <span>$5.00</span>
+                </div>
+                <div class="summary-line total">
+                    <span>Total</span>
+                    <span id="checkoutTotal">$0.00</span>
+                </div>
+                <button class="primary-button" onclick="checkout()">Checkout</button>
+            </div>
+        </aside>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="brand-logo">🛍️</span>
+                <div>
+                    <p class="footer-title">ShopEasy</p>
+                    <p class="footer-copy">Built for fast and friendly online shopping.</p>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="checkout.html">Checkout</a>
+                <a href="orders.html">My Orders</a>
+                <a href="login.html">Login</a>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 ShopEasy. Crafted for your everyday shopping experience.</div>
+    </footer>
 
     <script src="js/cart.js"></script>
-
+    <script src="js/main.js"></script>
 </body>
 </html>

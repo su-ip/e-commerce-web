@@ -127,26 +127,16 @@ exports.dashboardStats = async (req, res) => {
 
         const revenue =
             await pool.query(
-
                 `SELECT
-                    COALESCE(SUM(total_price),0)
-
+                    COALESCE(SUM(total_price),0) AS revenue
                  FROM orders`
             );
 
         res.json({
-
-            totalUsers:
-                users.rows[0].count,
-
-            totalProducts:
-                products.rows[0].count,
-
-            totalOrders:
-                orders.rows[0].count,
-
-            totalRevenue:
-                revenue.rows[0].coalesce
+            totalUsers: users.rows[0].count,
+            totalProducts: products.rows[0].count,
+            totalOrders: orders.rows[0].count,
+            totalRevenue: revenue.rows[0].revenue
         });
 
     } catch (error) {

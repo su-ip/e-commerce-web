@@ -5,39 +5,103 @@
     <title>Checkout</title>
     <meta name="description" content="Best ecommerce website" />
     <meta name="keywords" content="shop,ecommerce" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
 </head>
 
 <body>
+    
+    <header class="page-header">
+        <div class="brand">
+            <span class="brand-logo">🛍️</span>
+            <div>
+                <h1>ShopEasy</h1>
+                <p>Your ecommerce store for fast, friendly shopping.</p>
+            </div>
+        </div>
 
-    <h1>Checkout</h1>
+        <nav class="top-nav">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="orders.html">MyOrders</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="cart.html" class="cart-icon"><i class="fas fa-shopping-bag"></i></a>
+                <button class="menu-icon" id="menuToggle" aria-label="Open navigation menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </nav>
 
-    <form id="checkoutForm">
+        <div class="nav-dropdown" id="navDropdown">
+            <a href="index.html">Home</a>
+            <a href="#profile.html">Profile</a>    
+            <a href="products.html">Products</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="#faqs">FAQs</a>
+            <a href="login.html" onclick="logout()">Log Out</a>
 
-        <input
-            type="text"
-            placeholder="Full Name"
-            required
-        />
+        </div>
+    </header>
 
-        <input
-            type="text"
-            placeholder="Address"
-            required
-        />
+    <main class="checkout-page">
+        <section class="checkout-form">
+            <h2>Shipping & Payment</h2>
+            <form id="checkoutForm">
+                <label for="fullName">Full name</label>
+                <input id="fullName" type="text" placeholder="Full Name" required />
 
-        <input
-            type="text"
-            placeholder="Phone Number"
-            required
-        />
+                <label for="address">Shipping address</label>
+                <input id="address" type="text" placeholder="Address" required />
 
-        <button type="submit">
-            Proceed To Payment
-        </button>
+                <label for="phone">Phone number</label>
+                <input id="phone" type="text" placeholder="Phone Number" required />
 
-    </form>
+                <label for="paymentMethod">Payment method</label>
+                <select id="paymentMethod">
+                    <option>Cash On Delivery</option>
+                    <option>eSewa</option>
+                    <option>Khalti IME</option>
+                </select>
+
+                <button type="submit" class="primary-button">Place Order</button>
+            </form>
+        </section>
+
+        <aside class="order-summary">
+            <h2>Your Order</h2>
+            <div id="orderItems"></div>
+            <div class="summary-totals">
+                <div class="summary-line"><span>Subtotal</span><span id="subtotalPrice">$0.00</span></div>
+                <div class="summary-line"><span>Shipping</span><span id="shippingPrice">$0.00</span></div>
+                <div class="summary-line total"><span>Total</span><span id="totalPrice">$0.00</span></div>
+            </div>
+        </aside>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="brand-logo">🛍️</span>
+                <div>
+                    <p class="footer-title">ShopEasy</p>
+                    <p class="footer-copy">Built for fast and friendly online shopping.</p>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="cart.html">Cart</a>
+                <a href="orders.html">My Orders</a>
+                <a href="login.html">Login</a>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 ShopEasy. Crafted for your everyday shopping experience.</div>
+    </footer>
 
     <script src="js/checkout.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

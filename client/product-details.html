@@ -4,12 +4,96 @@
     <title>Product Details</title>
     <meta name="description" content="Best ecommerce website" />
     <meta name="keywords" content="shop,ecommerce" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
 
-    <div id="product"></div>
+    <header class="page-header">
+        <div class="brand">
+            <span class="brand-logo">🛍️</span>
+            <div>
+                <h1>ShopEasy</h1>
+                <p>Your ecommerce store for fast, friendly shopping.</p>
+            </div>
+        </div>
+
+        <nav class="top-nav">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="orders.html">MyOrders</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="cart.html" class="cart-icon"><i class="fas fa-shopping-bag"></i></a>
+                <button class="menu-icon" id="menuToggle" aria-label="Open navigation menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </nav>
+
+        <div class="nav-dropdown" id="navDropdown">
+            <a href="index.html">Home</a>
+            <a href="#profile.html">Profile</a>    
+            <a href="products.html">Products</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="#faqs">FAQs</a>
+            <a href="login.html" onclick="logout()">Log Out</a>
+
+        </div>
+    </header>
+
+    <main class="product-page">
+        <section class="image-column">
+            <div class="image-card">
+                <div class="main-image" id="mainImageWrap">
+                    <img id="mainImage" src="" alt="Product image" />
+                </div>
+
+                <div class="thumbnails" id="thumbnails"></div>
+            </div>
+        </section>
+
+        <section class="details-column">
+            <h1 id="productName">Product name</h1>
+            <h2 id="productPrice">$0.00</h2>
+            <p id="productDescription">Product description</p>
+
+            <div class="product-actions">
+                <div class="product-quantity" aria-label="Quantity selector">
+                    <button id="qtyMinus" class="quantity-btn" aria-label="Decrease quantity">-</button>
+                    <input id="qtyInput" type="number" min="1" value="1" />
+                    <button id="qtyPlus" class="quantity-btn" aria-label="Increase quantity">+</button>
+                </div>
+
+                <button id="addToCartBtn" class="primary-button">Add to cart</button>
+                <button id="checkoutBtn" class="secondary-button">Buy now</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="brand-logo">🛍️</span>
+                <div>
+                    <p class="footer-title">ShopEasy</p>
+                    <p class="footer-copy">Built for fast and friendly online shopping.</p>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="cart.html">Cart</a>
+                <a href="orders.html">My Orders</a>
+                <a href="login.html">Login</a>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 ShopEasy. Crafted for your everyday shopping experience.</div>
+    </footer>
 
     <script src="js/product-details.js"></script>
+    <script src="js/main.js"></script>
 
 </body>
 </html>

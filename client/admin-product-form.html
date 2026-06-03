@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Add / Edit Product</title>
+    <meta name="description" content="Admin add or edit products" />
+    <meta name="keywords" content="admin,product,form" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <main class="admin-page admin-product-form-page">
+        <div class="admin-page-header">
+            <div>
+                <h1 id="formTitle">Add Product</h1>
+                <p id="formSubtitle">Create a new product with up to four images.</p>
+            </div>
+            <div class="admin-page-actions">
+                <button class="secondary-button" id="cancelFormBtn">Back to products</button>
+            </div>
+        </div>
+
+        <div class="section-panel admin-form-panel">
+            <form id="productForm" class="admin-form">
+                <div class="form-row">
+                    <label for="productName">Name</label>
+                    <input id="productName" name="name" type="text" required />
+                </div>
+                <div class="form-row">
+                    <label for="productDescription">Description</label>
+                    <textarea id="productDescription" name="description" rows="5" required></textarea>
+                </div>
+                <div class="form-row split-row">
+                    <div>
+                        <label for="productPrice">Price ($)</label>
+                        <input id="productPrice" name="price" type="number" min="0" step="0.01" required />
+                    </div>
+                    <div>
+                        <label for="productStock">Stock</label>
+                        <input id="productStock" name="stock" type="number" min="0" required />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="productCategory">Category ID</label>
+                    <input id="productCategory" name="category_id" type="number" min="1" required />
+                </div>
+
+                <div class="form-row">
+                    <label>Product images</label>
+                    <p class="field-note">Select up to four images. Leave blank to keep existing images when editing.</p>
+                    <div class="image-input-grid">
+                        <div class="image-input-group">
+                            <label for="image1">Image 1</label>
+                            <input id="image1" name="images" type="file" accept="image/*" />
+                        </div>
+                        <div class="image-input-group">
+                            <label for="image2">Image 2</label>
+                            <input id="image2" name="images" type="file" accept="image/*" />
+                        </div>
+                        <div class="image-input-group">
+                            <label for="image3">Image 3</label>
+                            <input id="image3" name="images" type="file" accept="image/*" />
+                        </div>
+                        <div class="image-input-group">
+                            <label for="image4">Image 4</label>
+                            <input id="image4" name="images" type="file" accept="image/*" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="image-preview-list" id="existingImages"></div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="add-button" id="saveProductButton">Save product</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="brand-logo">🛍️</span>
+                <div>
+                    <p class="footer-title">ShopEasy</p>
+                    <p class="footer-copy">Built for fast and friendly online shopping.</p>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="cart.html">Cart</a>
+                <a href="orders.html">My Orders</a>
+                <a href="login.html">Login</a>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 ShopEasy. Crafted for your everyday shopping experience.</div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/admin-product-form.js"></script>
+</body>
+</html>

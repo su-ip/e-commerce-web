@@ -1,13 +1,27 @@
 const pool = require('../config/db');
-// PERFORMANCE NOTE: Implement image compression middleware (e.g., sharp) to reduce image file sizes
-// PERFORMANCE NOTE: Consider using WebP format for better compression and performance
+const PRODUCT_IMAGE_COLUMNS = ['image', 'image2', 'image3', 'image4'];
+let cachedProductImageColumns = null;
 
+async function getProductImageColumns() {
+    if (cachedProductImageColumns) {
+        return cachedProductImageColumns;
+    }
+
+    const result = await pool.query(
+        `SELECT column_name
+         FROM information_schema.columns
+         WHERE table_name='products'
+           AND column_name IN ('image','image2','image3','image4')
+         ORDER BY ordinal_position`
+    );
+
+    cachedProductImageColumns = result.rows.map((row) => row.column_name);
+    return cachedProductImageColumns;
+}
 
 // CREATE PRODUCT
 exports.createProduct = async (req, res) => {
-
     try {
-
         const {
             name,
             description,
@@ -34,35 +48,30 @@ exports.createProduct = async (req, res) => {
             });
         }
 
-        const image = req.file
-            ? req.file.filename
-            : null;
+        const files = req.files || [];
+        const imageColumns = await getProductImageColumns();
+        const images = imageColumns.map((_, index) => {
+            const file = files[index];
+            return file ? file.filename : null;
+        });
+
+        const insertColumns = ['name', 'description', 'price', 'stock', 'category_id', ...imageColumns];
+        const placeholders = insertColumns.map((_, index) => `$${index + 1}`).join(', ');
+        const values = [name, description, price, stock, category_id, ...images];
 
         const newProduct = await pool.query(
-
-            `INSERT INTO products
-            (name,description,price,stock,category_id,image)
-
-            VALUES($1,$2,$3,$4,$5,$6)
-
-            RETURNING *`,
-
-            [
-                name,
-                description,
-                price,
-                stock,
-                category_id,
-                image
-            ]
+            `INSERT INTO products (${insertColumns.join(', ')})
+             VALUES(${placeholders})
+             RETURNING *`,
+            values
         );
 
-        res.status(201).json(newProduct.rows[0]);
+        const product = newProduct.rows[0];
+        product.images = images.filter(Boolean);
 
+        res.status(201).json(product);
     } catch (error) {
-
         console.log(error.message);
-
         res.status(500).json({
             message: 'Server Error'
         });
@@ -72,52 +81,33 @@ exports.createProduct = async (req, res) => {
 
 // GET ALL PRODUCTS
 exports.getProducts = async (req, res) => {
-
     try {
-
-        const keyword =
-            req.query.keyword || '';
-
-        const page =
-            parseInt(req.query.page) || 1;
-
-        const limit = 8;
-
-        const offset =
-            (page - 1) * limit;
+        const keyword = req.query.keyword || '';
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 8;
+        const offset = (page - 1) * limit;
 
         const products = await pool.query(
-
             `SELECT
                 products.*,
                 categories.name AS category_name
-
              FROM products
-
              LEFT JOIN categories
              ON products.category_id = categories.id
-
-             WHERE
-                LOWER(products.name)
-                LIKE LOWER($1)
-
+             WHERE LOWER(products.name) LIKE LOWER($1)
              ORDER BY products.id DESC
-
              LIMIT $2 OFFSET $3`,
-
-            [
-                `%${keyword}%`,
-                limit,
-                offset
-            ]
+            [`%${keyword}%`, limit, offset]
         );
 
-        res.json(products.rows);
+        const rows = products.rows.map((row) => ({
+            ...row,
+            images: [row.image, row.image2, row.image3, row.image4].filter(Boolean)
+        }));
 
+        res.json(rows);
     } catch (error) {
-
         console.log(error.message);
-
         res.status(500).json({
             message: 'Server Error'
         });
@@ -127,40 +117,32 @@ exports.getProducts = async (req, res) => {
 
 // GET SINGLE PRODUCT
 exports.getSingleProduct = async (req, res) => {
-
     try {
-
         const { id } = req.params;
 
         const product = await pool.query(
-
             `SELECT
                 products.*,
                 categories.name AS category_name
-
-            FROM products
-
-            LEFT JOIN categories
-            ON products.category_id = categories.id
-
-            WHERE products.id=$1`,
-
+             FROM products
+             LEFT JOIN categories
+             ON products.category_id = categories.id
+             WHERE products.id=$1`,
             [id]
         );
 
         if (product.rows.length === 0) {
-
             return res.status(404).json({
                 message: 'Product not found'
             });
         }
 
-        res.json(product.rows[0]);
+        const row = product.rows[0];
+        row.images = [row.image, row.image2, row.image3, row.image4].filter(Boolean);
 
+        res.json(row);
     } catch (error) {
-
         console.log(error.message);
-
         res.status(500).json({
             message: 'Server Error'
         });
@@ -170,47 +152,67 @@ exports.getSingleProduct = async (req, res) => {
 
 // UPDATE PRODUCT
 exports.updateProduct = async (req, res) => {
-
     try {
-
         const { id } = req.params;
-
         const {
             name,
             description,
             price,
-            stock
+            stock,
+            category_id
         } = req.body;
 
-        await pool.query(
+        const existingProduct = await pool.query('SELECT * FROM products WHERE id=$1', [id]);
+        if (existingProduct.rows.length === 0) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
 
-            `UPDATE products
+        const current = existingProduct.rows[0];
+        const files = req.files || [];
+        const imageColumns = await getProductImageColumns();
+        const updatedImages = imageColumns.map((col, index) => {
+            if (files[index]) {
+                return files[index].filename;
+            }
 
-            SET
-                name=$1,
-                description=$2,
-                price=$3,
-                stock=$4
-
-            WHERE id=$5`,
-
-            [
-                name,
-                description,
-                price,
-                stock,
-                id
-            ]
-        );
-
-        res.json({
-            message: 'Product updated'
+            return current[col] || null;
         });
 
+        const updatedName = name !== undefined ? name : current.name;
+        const updatedDescription = description !== undefined ? description : current.description;
+        const updatedPrice = price !== undefined && price !== null ? price : current.price;
+        const updatedStock = stock !== undefined && stock !== null ? stock : current.stock;
+        const updatedCategoryId = category_id !== undefined && category_id !== null ? category_id : current.category_id;
+
+        const setClauses = [
+            'name=$1',
+            'description=$2',
+            'price=$3',
+            'stock=$4',
+            'category_id=$5',
+            ...imageColumns.map((col, index) => `${col}=$${6 + index}`)
+        ];
+
+        const queryValues = [
+            updatedName,
+            updatedDescription,
+            updatedPrice,
+            updatedStock,
+            updatedCategoryId,
+            ...updatedImages,
+            id
+        ];
+
+        await pool.query(
+            `UPDATE products
+             SET ${setClauses.join(', ')}
+             WHERE id=$${queryValues.length}`,
+            queryValues
+        );
+
+        res.json({ message: 'Product updated' });
     } catch (error) {
-
         console.log(error.message);
-
         res.status(500).json({
             message: 'Server Error'
         });

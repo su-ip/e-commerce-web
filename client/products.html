@@ -10,30 +10,123 @@
         rel="stylesheet"
         href="css/style.css"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
 </head>
 
 <body>
 
-    <h1>Products</h1>
+    <header class="page-header">
+        <div class="brand">
+            <span class="brand-logo">🛍️</span>
+            <div>
+                <h1>ShopEasy</h1>
+                <p>Your ecommerce store for fast, friendly shopping.</p>
+            </div>
+        </div>
 
-    <div id="loader">
-        Loading...
-    </div>
+        <nav class="top-nav">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="orders.html">MyOrders</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="cart.html" class="cart-icon"><i class="fas fa-shopping-bag"></i></a>
+                <button class="menu-icon" id="menuToggle" aria-label="Open navigation menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </nav>
 
-    <div id="products">
-        <input
-    type="text"
-    id="searchInput"
-    placeholder="Search products"
-/>
+        <div class="nav-dropdown" id="navDropdown">
+            <a href="index.html">Home</a>
+            <a href="#profile.html">Profile</a>    
+            <a href="products.html">Products</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="#faqs">FAQs</a>
+            <a href="login.html" onclick="logout()">Log Out</a>
 
-<button onclick="searchProducts()">
-    Search
-</button>
-    </div>
+        </div>
+    </header>
 
-    <script src="js/products.js"></script>
+    <main class="page-content">
+        <aside class="product-sidebar">
+            <div class="sidebar-panel">
+                <h2>Search</h2>
+                <div class="search-panel">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search products"
+                    />
+                    <button class="primary-button" onclick="searchProducts()">Search</button>
+                </div>
+            </div>
+
+            <div class="sidebar-panel">
+                <h2>Filters</h2>
+                <div class="filter-group">
+                    <h3>Category</h3>
+                    <button type="button" class="filter-button active" onclick="applyFilter('All')">All</button>
+                    <button type="button" class="filter-button" onclick="applyFilter('Electronics')">Electronics</button>
+                    <button type="button" class="filter-button" onclick="applyFilter('Clothing')">Clothing</button>
+                    <button type="button" class="filter-button" onclick="applyFilter('Accessories')">Accessories</button>
+                </div>
+                <div class="filter-group">
+                    <h3>Max price</h3>
+                    <div class="price-range">
+                        <span>$0</span>
+                        <input
+                            type="range"
+                            id="priceRange"
+                            min="0"
+                            max="500"
+                            value="500"
+                            oninput="updatePriceLabel(this.value)"
+                        />
+                        <span id="priceLabel">$500</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <section class="product-display">
+            <div class="product-action-bar">
+                <h2>Products</h2>
+                <p id="productCount">Showing products</p>
+            </div>
+
+            <div id="loader">
+                Loading...
+            </div>
+
+            <div id="products" class="product-grid"></div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="brand-logo">🛍️</span>
+                <div>
+                    <p class="footer-title">ShopEasy</p>
+                    <p class="footer-copy">Built for fast and friendly online shopping.</p>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="cart.html">Cart</a>
+                <a href="orders.html">My Orders</a>
+                <a href="login.html">Login</a>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 ShopEasy. Crafted for your everyday shopping experience.</div>
+    </footer>
+
+    <script src="js/product.js"></script>
+    <script src="js/main.js"></script>
 
 </body>
 </html>

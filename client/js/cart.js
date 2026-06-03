@@ -46,31 +46,32 @@ async function getCart() {
 
         if (cart.length === 0) {
             cartContainer.innerHTML = '<p>Your cart is empty.</p>';
-            totalPrice.innerText = 'Total: $0.00';
+            totalPrice.innerText = '$0.00';
+            document.getElementById('checkoutTotal').innerText = '$0.00';
             return;
         }
 
-        let total = 0;
-
+        let subtotal = 0;
 
         cart.forEach((item) => {
-
-            const subtotal =
-                parseFloat(item.price) * item.quantity;
-
-            total += subtotal;
-
+            const image = Array.isArray(item.images)
+                ? item.images.find(Boolean) || item.image
+                : item.image;
+            const itemSubtotal = parseFloat(item.price) * item.quantity;
+            subtotal += itemSubtotal;
 
             cartContainer.innerHTML += `
 
             <div class="product-card">
 
-                <img
-                    src="http://localhost:5000/uploads/products/${item.image}"
-                    width="200"
-                    loading="lazy"
-                    alt="${item.name}"
-                />
+                ${image ? `
+                    <img
+                        src="http://localhost:5000/uploads/products/${image}"
+                        width="200"
+                        loading="lazy"
+                        alt="${item.name}"
+                    />
+                ` : '<div class="product-thumb">No image</div>'}
 
                 <div class="product-info">
                     <h3>${item.name}</h3>
@@ -96,8 +97,9 @@ async function getCart() {
         `;
         });
 
-        totalPrice.innerText =
-            `Total: $${total.toFixed(2)}`;
+        totalPrice.innerText = `$${subtotal.toFixed(2)}`;
+        const shipping = subtotal > 0 ? 5.0 : 0.0;
+        document.getElementById('checkoutTotal').innerText = `$${(subtotal + shipping).toFixed(2)}`;
 
     } catch (error) {
 

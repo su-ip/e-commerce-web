@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Product Details</title>
+    <meta name="description" content="Admin product details page" />
+    <meta name="keywords" content="admin,product,details" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <main class="admin-page admin-product-detail-page">
+        <div class="admin-page-header">
+            <div>
+                <h1>Product Details</h1>
+                <p>Review the full product gallery and information.</p>
+            </div>
+            <div class="admin-page-actions">
+                <button class="secondary-button" id="backToListBtn">Back to products</button>
+                <button class="add-button" id="editProductBtn">Edit product</button>
+            </div>
+        </div>
+
+        <div class="section-panel admin-detail-panel">
+            <div class="product-page">
+                <section class="image-column">
+                    <div class="image-card">
+                        <div class="main-image" id="adminMainImageWrap">
+                            <img id="adminMainImage" src="" alt="Product image" />
+                        </div>
+                        <div class="thumbnails" id="adminThumbnails"></div>
+                    </div>
+                </section>
+
+                <section class="details-column">
+                    <h1 id="adminProductName">Product name</h1>
+                    <h2 id="adminProductPrice">$0.00</h2>
+                    <p id="adminProductDescription">Product description</p>
+                    <div class="product-detail-meta">
+                        <p><strong>Category:</strong> <span id="adminProductCategory">Uncategorized</span></p>
+                        <p><strong>Stock:</strong> <span id="adminProductStock">0</span></p>
+                        <p><strong>SKU:</strong> <span id="adminProductSku">#N/A</span></p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="brand-logo">🛍️</span>
+                <div>
+                    <p class="footer-title">ShopEasy</p>
+                    <p class="footer-copy">Built for fast and friendly online shopping.</p>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="cart.html">Cart</a>
+                <a href="orders.html">My Orders</a>
+                <a href="login.html">Login</a>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 ShopEasy. Crafted for your everyday shopping experience.</div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/admin-product.js"></script>
+</body>
+</html>

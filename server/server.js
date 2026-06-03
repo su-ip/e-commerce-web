@@ -7,6 +7,7 @@ require('dotenv').config();
 // const compression = require('compression');
 // app.use(compression());
 
+const path = require('path');
 const authRoutes = require('./routes/authRoutes');
 
 const app = express();
@@ -58,9 +59,13 @@ app.use('/api/auth', authRoutes);
 
 app.use('/api/products', productRoutes);
 
-app.use('/uploads', express.static('uploads', {
+// Serve uploaded images with an absolute path and caching
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
     maxAge: '1d' // Cache for 1 day
 }));
+
+// Serve client static files (HTML, CSS, JS)
+app.use(express.static(path.join(__dirname, '..', 'client')));
 
 app.use('/api/cart', cartRoutes);
 

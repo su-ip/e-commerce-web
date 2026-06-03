@@ -23,7 +23,7 @@ router.post(
     '/',
     protect,
     admin,
-    upload.single('image'),
+    upload.array('images', 4),
     createProduct
 );
 
@@ -41,6 +41,7 @@ router.put(
     '/:id',
     protect,
     admin,
+    upload.array('images', 4),
     updateProduct
 );
 

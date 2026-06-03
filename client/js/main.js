@@ -33,3 +33,25 @@ function requireAdmin() {
     }
     return true;
 }
+
+function setupNavMenu() {
+    const menuToggle = document.getElementById('menuToggle');
+    const navDropdown = document.getElementById('navDropdown');
+
+    if (!menuToggle || !navDropdown) {
+        return;
+    }
+
+    menuToggle.addEventListener('click', () => {
+        navDropdown.classList.toggle('open');
+    });
+
+    window.addEventListener('click', (event) => {
+        if (!navDropdown.contains(event.target) && !menuToggle.contains(event.target)) {
+            navDropdown.classList.remove('open');
+        }
+    });
+}
+
+window.addEventListener('DOMContentLoaded', setupNavMenu);
+

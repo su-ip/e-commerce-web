@@ -1,32 +1,233 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-
     <title>Admin Dashboard</title>
-    <meta name="description" content="Best ecommerce website" />
-    <meta name="keywords" content="shop,ecommerce" />
-
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    />
-
+    <meta name="description" content="Admin dashboard for products, orders, and users" />
+    <meta name="keywords" content="admin,dashboard,products,orders,users" />
+    <link rel="stylesheet" href="css/style.css" />
 </head>
-
 <body>
+    <main class="admin-page">
+        <div class="admin-page-header">
+            <div>
+                <h1>Admin Dashboard</h1>
+                <p>Manage products, orders, users and inventory from one unified page.</p>
+            </div>
+            <div class="admin-page-actions">
+                <button id="newProductBtn" class="add-button">Add Product</button>
+            </div>
+        </div>
 
-    <h1>Admin Dashboard</h1>
+        <div class="admin-tabs">
+            <button type="button" class="tab-button active" data-target="dashboardSection">Dashboard</button>
+            <button type="button" class="tab-button" data-target="productsSection">Products</button>
+            <button type="button" class="tab-button" data-target="ordersSection">Orders</button>
+            <button type="button" class="tab-button" data-target="usersSection">Users</button>
+        </div>
 
-    <div id="stats"></div>
+        <section id="dashboardSection" class="admin-section">
+            <div class="section-panel stats-grid">
+                <div class="stat-card">
+                    <p class="stat-label">Products</p>
+                    <h2 id="totalProducts">0</h2>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Orders</p>
+                    <h2 id="totalOrders">0</h2>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Users</p>
+                    <h2 id="totalUsers">0</h2>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Revenue</p>
+                    <h2 id="totalRevenue">$0.00</h2>
+                </div>
+            </div>
 
-    <h2>Orders</h2>
+            <div class="section-panel">
+                <div class="section-header">
+                    <div>
+                        <h2>Recent Orders</h2>
+                        <p>Latest order activity for quick review.</p>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>User</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentOrders"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-    <div id="orders"></div>
+        <section id="productsSection" class="admin-section hidden">
+            <div class="section-panel section-header">
+                <div>
+                    <h2>Product Catalog</h2>
+                    <p>View, edit, and remove products. Add new products with up to four images.</p>
+                </div>
+                <button id="productSectionAddBtn" class="add-button">Add Product</button>
+            </div>
 
-    <button onclick="logout()">Logout</button>
+            <div class="section-panel">
+                <div class="table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="productFormSection" class="section-panel admin-form-panel hidden">
+                <form id="productForm" class="admin-form">
+                    <div class="form-row">
+                        <label for="productName">Name</label>
+                        <input id="productName" name="name" type="text" required />
+                    </div>
+                    <div class="form-row">
+                        <label for="productDescription">Description</label>
+                        <textarea id="productDescription" name="description" rows="5" required></textarea>
+                    </div>
+                    <div class="form-row split-row">
+                        <div>
+                            <label for="productPrice">Price ($)</label>
+                            <input id="productPrice" name="price" type="number" min="0" step="0.01" required />
+                        </div>
+                        <div>
+                            <label for="productStock">Stock</label>
+                            <input id="productStock" name="stock" type="number" min="0" required />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label for="productCategory">Category ID</label>
+                        <input id="productCategory" name="category_id" type="number" min="1" required />
+                    </div>
+
+                    <div class="form-row">
+                        <label>Product images</label>
+                        <p class="field-note">Select up to four images. Leave blank to keep existing images when editing.</p>
+                        <div class="image-input-grid">
+                            <div class="image-input-group">
+                                <label for="image1">Image 1</label>
+                                <input id="image1" name="images" type="file" accept="image/*" />
+                            </div>
+                            <div class="image-input-group">
+                                <label for="image2">Image 2</label>
+                                <input id="image2" name="images" type="file" accept="image/*" />
+                            </div>
+                            <div class="image-input-group">
+                                <label for="image3">Image 3</label>
+                                <input id="image3" name="images" type="file" accept="image/*" />
+                            </div>
+                            <div class="image-input-group">
+                                <label for="image4">Image 4</label>
+                                <input id="image4" name="images" type="file" accept="image/*" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="image-preview-list" id="existingImages"></div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="add-button" id="saveProductButton">Save product</button>
+                        <button type="button" class="secondary-button" id="cancelFormBtn">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="ordersSection" class="admin-section hidden">
+            <div class="section-panel">
+                <div class="section-header">
+                    <div>
+                        <h2>All Orders</h2>
+                        <p>Review customer orders and delivery status.</p>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="usersSection" class="admin-section hidden">
+            <div class="section-panel">
+                <div class="section-header">
+                    <div>
+                        <h2>Users</h2>
+                        <p>View registered customers and admin accounts.</p>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Joined</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="brand-logo">🛍️</span>
+                <div>
+                    <p class="footer-title">ShopEasy</p>
+                    <p class="footer-copy">Built for fast and friendly online shopping.</p>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="cart.html">Cart</a>
+                <a href="orders.html">My Orders</a>
+                <a href="login.html">Login</a>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 ShopEasy. Crafted for your everyday shopping experience.</div>
+    </footer>
 
     <script src="js/main.js"></script>
     <script src="js/admin.js"></script>
-
 </body>
 </html>

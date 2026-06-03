@@ -5,16 +5,71 @@
     <title>My Orders</title>
     <meta name="description" content="Best ecommerce website" />
     <meta name="keywords" content="shop,ecommerce" />
-
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 
 <body>
+    <header class="page-header">
+        <div class="brand">
+            <span class="brand-logo">🛍️</span>
+            <div>
+                <h1>ShopEasy</h1>
+                <p>Your ecommerce store orders.</p>
+            </div>
+        </div>
 
-    <h1>My Orders</h1>
+        <nav class="top-nav">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="checkout.html">Checkout</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="cart.html" class="cart-icon"><i class="fas fa-shopping-bag"></i></a>
+                <button class="menu-icon" id="menuToggle" aria-label="Open navigation menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </nav>
 
-    <button onclick="logout()">Logout</button>
+        <div class="nav-dropdown" id="navDropdown">
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="cart.html">Cart</a>
+            <a href="checkout.html">Checkout</a>
+            <a href="login.html" onclick="logout()">Log Out</a>
+        </div>
+    </header>
 
-    <div id="orders"></div>
+    <main class="orders-page">
+        <section class="orders-panel">
+            <div class="page-title">
+                <h1>My Orders</h1>
+                <p>Track your past purchases, order status, and totals.</p>
+            </div>
+            <div id="orders" class="orders-list"></div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="brand-logo">🛍️</span>
+                <div>
+                    <p class="footer-title">ShopEasy</p>
+                    <p class="footer-copy">Built for fast and friendly online shopping.</p>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="cart.html">Cart</a>
+                <a href="checkout.html">Checkout</a>
+                <a href="login.html">Login</a>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 ShopEasy. Crafted for your everyday shopping experience.</div>
+    </footer>
 
     <script src="js/main.js"></script>
     <script src="js/orders.js"></script>
